@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="">Home</button>
+            <button mat-menu-item routerLink="admin">Admin Dashboard</button>
+        </mat-menu>
+        <span>Keka Bot</span>
+        <span class="menu-spacer"></span>
+    </mat-toolbar-row>
+</mat-toolbar>

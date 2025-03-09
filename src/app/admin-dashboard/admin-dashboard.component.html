@@ -1,0 +1,37 @@
+<!-- Loading Spinner -->
+<div *ngIf="isUploading" class="progress-container">
+    <mat-spinner diameter="40"></mat-spinner>
+</div>
+<div class="admin-container">
+    <div class="content-container animate__animated animate__fadeIn">
+        <div class="upload-card">
+            <h2 class="text-primary">Upload a PDF for AI Processing</h2>
+            <p class="text-muted">Upload a document to enhance the AI bot's knowledge base.</p>
+
+            <form [formGroup]="pdfUploadForm" (ngSubmit)="uploadFile()">
+                <div class="file-upload-box" (dragover)="onDragOver($event)" (drop)="onFileDropped($event)">
+                    <label for="fileInput" class="custom-file-upload">
+                        <mat-icon class="upload-icon">cloud_upload</mat-icon>
+                        <p class="upload-text">Click or drag a file here to upload</p>
+                    </label>
+                    <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="application/pdf">
+                </div>
+
+                <!-- Show selected file name -->
+                <p *ngIf="selectedFileName" class="file-name">
+                    <mat-icon color="primary">description</mat-icon> {{ selectedFileName }}
+                </p>
+
+                <mat-error
+                    *ngIf="pdfUploadForm.get('file')?.hasError('required') && pdfUploadForm.get('file')?.touched">
+                    File upload is required!
+                </mat-error>
+
+                <button mat-flat-button color="primary" type="submit" class="upload-btn"
+                    [disabled]="pdfUploadForm.invalid || isUploading">
+                    <mat-icon>cloud_upload</mat-icon> Upload Document
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

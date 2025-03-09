@@ -1,0 +1,54 @@
+<div class="home-container">
+    <div class="content-container">
+      <div class="intro-card">
+        <h1>Welcome to Keka Bot</h1>
+        <p>Your AI-powered assistant for seamless employee interactions.</p>
+        <button mat-flat-button color="primary" (click)="toggleChatbox()">
+          <mat-icon>chat</mat-icon> Start Chat
+        </button>
+      </div>
+      <div class="feature-grid">
+        <mat-card class="feature-card">
+          <mat-icon>support_agent</mat-icon>
+          <h3>24/7 Assistance</h3>
+          <p>Get real-time responses to all your HR and work-related queries.</p>
+        </mat-card>
+        <mat-card class="feature-card">
+          <mat-icon>analytics</mat-icon>
+          <h3>Smart Insights</h3>
+          <p>Analyze work trends and employee performance with AI-driven insights.</p>
+        </mat-card>
+        <mat-card class="feature-card">
+          <mat-icon>settings_suggest</mat-icon>
+          <h3>Customizable</h3>
+          <p>Tailor the bot’s responses and functionalities to fit your organization’s needs.</p>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="chatbot-icon" (click)="toggleChatbox()">
+    <mat-icon class="ai-icon">smart_toy</mat-icon>
+  </div>
+
+<div class="chatbox" [ngClass]="{ open: chatboxOpen }">
+    <div class="header">
+       
+        <div class="chatbot-controls">
+            <h2>Keka Ai assistant!</h2>
+            <div>
+            <button (click)="toggleChatbox()" mat-icon-button>
+                <mat-icon>remove</mat-icon>
+            </button>
+            <button  (click)="clearChat()" mat-icon-button >
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        </div>
+        <h6 class="right-align">- Powered by Google Gemini</h6>
+    </div>
+    <app-conversation class="chatbox-conversation" [messages]="messages"></app-conversation>
+    <div class="footer">
+      <app-prompt (textChange)="handlePromptChange($event)"></app-prompt>
+    </div>
+</div>

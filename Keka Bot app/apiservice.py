@@ -85,7 +85,7 @@ class PolicyService:
         response = self.index.query(
             namespace="leave-workspace",
             vector=new_embedding,
-            top_k=3,
+            top_k=20,
             include_metadata=True
         )
 

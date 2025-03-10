@@ -15,7 +15,7 @@ export class ChatbotComponent {
   constructor(private chatBotService: ChatBotService) {}
 
   ngOnInit() {
-    this.messages = this.chatBotService.messages;
+    this.messages = [...this.chatBotService.messages]; // Ensure reference safety
   }
 
   toggleChatbox() {
@@ -27,28 +27,40 @@ export class ChatbotComponent {
       from: 'user',
       text: $event
     });
+
+    // Add a temporary typing indicator
+    const typingMessage = {
+      from: 'bot',
+      text: '',
+      isTyping: true
+    };
+    this.messages.push(typingMessage);
+
     this.chatBotService.submitPrompt($event).subscribe({
       next: (res) => {
         setTimeout(() => {
+          // Remove typing indicator before adding the response
+          this.messages = this.messages.filter(msg => !msg.isTyping);
           this.messages.push({
             from: 'bot',
             text: res.response.trim()
-          })}, 500);
+          });
+        }, 500);
       },
       error: (err) => {
         setTimeout(() => {
+          this.messages = this.messages.filter(msg => !msg.isTyping);
           this.messages.push({
             from: 'bot',
-            text: err.error?.error?.message
+            text: err.error?.error?.message || 'Something went wrong!'
           });
         }, 500);
-    }});
+      }
+    });
   }
 
   clearChat() {
     this.messages = [];
     this.chatBotService.messages = []; 
-    this.toggleChatbox();
-    this.ngOnInit()
   }
 }
